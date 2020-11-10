@@ -5,10 +5,26 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2020/21
 * [![Shiny](http://mybinder.org/badge.svg)](http://mybinder.org/v2/gh/gapo8/APPR-2020-21/master?urlpath=shiny/APPR-2020-21/projekt.Rmd) Shiny
 * [![RStudio](http://mybinder.org/badge.svg)](http://mybinder.org/v2/gh/gapo8/APPR-2020-21/master?urlpath=rstudio) RStudio
 
-## Tematika
+## Analiza košarkarskih igralcev NBA od sezone 2000/2001 do sezone 2018/2019
 
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal.
-Tukaj boste napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
+Do sezone 2018/2019 bom zbral in analiziral podatke o igralcih v rednem delu sezone.
+
+Podatki bodo vključevali:
+- državljanstvo
+- višino igralca (podatke bom pretvoril iz ameriških mer v cm)
+- starost igralca
+- koliko časa je bil igralec v igri
+- točke, skoki, asistence
+
+Primerjati želim predvsem razlike in statistične podatke med ameriškimi igralci in igralci iz drugih držav. Poskušal bom ugotoviti v katerih katerogijah so v povprečju boljši eni in v katerih drugi.
+
+Viri: 
+- Tabela 1: državljanstvo
+https://pr.nba.com/nba-rosters-feature-108-international-players-from-42-countries-and-territories/
+- Tabela 2: višina, starost:
+https://stats.nba.com/players/bio/
+- Tabela 3: statistika:
+https://stats.nba.com/players/traditional/?PerMode=Totals&sort=PTS&dir=-1&Season=2018-19&SeasonType=Regular%20Season
 
 ## Program
 
