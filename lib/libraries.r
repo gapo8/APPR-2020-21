@@ -4,6 +4,8 @@ library(gsubfn)
 library(tidyr)
 library(tmap)
 library(shiny)
+require(jsonlite)
+require(httr)
 
 options(gsubfn.engine="R")
 

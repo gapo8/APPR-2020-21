@@ -1,4 +1,3 @@
 # Podatki
 
-Tukaj bomo zbirali vse podatke (datoteke v obliki CSV, XML, ...), ki jih bo naš
-program uvozil.
+Tukaj so podatki o košarkarjih lige NBA od leta 2000 do leta 2019. Datoteke so oblike XML.
