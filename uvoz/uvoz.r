@@ -1,55 +1,47 @@
 # 2. faza: Uvoz podatkov
 
-sl <- locale("sl", decimal_mark=",", grouping_mark=".")
+library(readxl)
+osebni_podatki2000_2001 <- read_excel("podatki/osebni_podatki2000_2001.xlsx")
+osebni_podatki2001_2002 <- read_excel("podatki/osebni_podatki2001_2002.xlsx")
+osebni_podatki2002_2003 <- read_excel("podatki/osebni_podatki2002_2003.xlsx")
+osebni_podatki2003_2004 <- read_excel("podatki/osebni_podatki2003_2004.xlsx")
+osebni_podatki2004_2005 <- read_excel("podatki/osebni_podatki2004_2005.xlsx")
+osebni_podatki2005_2006 <- read_excel("podatki/osebni_podatki2005_2006.xlsx")
+osebni_podatki2006_2007 <- read_excel("podatki/osebni_podatki2006_2007.xlsx")
+osebni_podatki2007_2008 <- read_excel("podatki/osebni_podatki2007_2008.xlsx")
+osebni_podatki2008_2009 <- read_excel("podatki/osebni_podatki2008_2009.xlsx")
+osebni_podatki2009_2010 <- read_excel("podatki/osebni_podatki2009_2010.xlsx")
+osebni_podatki2010_2011 <- read_excel("podatki/osebni_podatki2010_2011.xlsx")
+osebni_podatki2011_2012 <- read_excel("podatki/osebni_podatki2011_2012.xlsx")
+osebni_podatki2012_2013 <- read_excel("podatki/osebni_podatki2012_2013.xlsx")
+osebni_podatki2013_2014 <- read_excel("podatki/osebni_podatki2013_2014.xlsx")
+osebni_podatki2014_2015 <- read_excel("podatki/osebni_podatki2014_2015.xlsx")
+osebni_podatki2015_2016 <- read_excel("podatki/osebni_podatki2015_2016.xlsx")
+osebni_podatki2016_2017 <- read_excel("podatki/osebni_podatki2016_2017.xlsx")
+osebni_podatki2017_2018 <- read_excel("podatki/osebni_podatki2017_2018.xlsx")
+osebni_podatki2018_2019 <- read_excel("podatki/osebni_podatki2018_2019.xlsx")
+osebni_podatki2019_2020 <- read_excel("podatki/osebni_podatki2019_2020.xlsx")
 
-# Funkcija, ki uvozi občine iz Wikipedije
-uvozi.obcine <- function() {
-  link <- "http://sl.wikipedia.org/wiki/Seznam_ob%C4%8Din_v_Sloveniji"
-  stran <- html_session(link) %>% read_html()
-  tabela <- stran %>% html_nodes(xpath="//table[@class='wikitable sortable']") %>%
-    .[[1]] %>% html_table(dec=",")
-  for (i in 1:ncol(tabela)) {
-    if (is.character(tabela[[i]])) {
-      Encoding(tabela[[i]]) <- "UTF-8"
-    }
-  }
-  colnames(tabela) <- c("obcina", "povrsina", "prebivalci", "gostota", "naselja",
-                        "ustanovitev", "pokrajina", "regija", "odcepitev")
-  tabela$obcina <- gsub("Slovenskih", "Slov.", tabela$obcina)
-  tabela$obcina[tabela$obcina == "Kanal ob Soči"] <- "Kanal"
-  tabela$obcina[tabela$obcina == "Loški potok"] <- "Loški Potok"
-  for (col in c("povrsina", "prebivalci", "gostota", "naselja", "ustanovitev")) {
-    if (is.character(tabela[[col]])) {
-      tabela[[col]] <- parse_number(tabela[[col]], na="-", locale=sl)
-    }
-  }
-  for (col in c("obcina", "pokrajina", "regija")) {
-    tabela[[col]] <- factor(tabela[[col]])
-  }
-  return(tabela)
-}
 
-# Funkcija, ki uvozi podatke iz datoteke druzine.csv
-uvozi.druzine <- function(obcine) {
-  data <- read_csv2("podatki/druzine.csv", col_names=c("obcina", 1:4),
-                    locale=locale(encoding="Windows-1250"))
-  data$obcina <- data$obcina %>% strapplyc("^([^/]*)") %>% unlist() %>%
-    strapplyc("([^ ]+)") %>% sapply(paste, collapse=" ") %>% unlist()
-  data$obcina[data$obcina == "Sveti Jurij"] <- iconv("Sveti Jurij ob Ščavnici", to="UTF-8")
-  data <- data %>% pivot_longer(`1`:`4`, names_to="velikost.druzine", values_to="stevilo.druzin")
-  data$velikost.druzine <- parse_number(data$velikost.druzine)
-  data$obcina <- parse_factor(data$obcina, levels=obcine)
-  return(data)
-}
+# Urejanje
 
-# Zapišimo podatke v razpredelnico obcine
-obcine <- uvozi.obcine()
+osebni_podatki_skupni <- rbind(osebni_podatki2009_2010, osebni_podatki2010_2011,
+                               osebni_podatki2011_2012, osebni_podatki2012_2013,
+                               osebni_podatki2013_2014, osebni_podatki2014_2015,
+                               osebni_podatki2015_2016, osebni_podatki2016_2017,
+                               osebni_podatki2017_2018, osebni_podatki2018_2019,
+                               osebni_podatki2019_2020,
+                               osebni_podatki2000_2001, osebni_podatki2001_2002,
+                               osebni_podatki2002_2003, osebni_podatki2003_2004,
+                               osebni_podatki2004_2005, osebni_podatki2005_2006,
+                               osebni_podatki2006_2007, osebni_podatki2007_2008) 
 
-# Zapišimo podatke v razpredelnico druzine.
-druzine <- uvozi.druzine(levels(obcine$obcina))
 
-# Če bi imeli več funkcij za uvoz in nekaterih npr. še ne bi
-# potrebovali v 3. fazi, bi bilo smiselno funkcije dati v svojo
-# datoteko, tukaj pa bi klicali tiste, ki jih potrebujemo v
-# 2. fazi. Seveda bi morali ustrezno datoteko uvoziti v prihodnjih
-# fazah.
+osebni_podatki_skupni$PTS <- parse_double(osebni_podatki_skupni$PTS) ##spremeni caracter v double
+osebni_podatki_skupni$REB <- parse_double(osebni_podatki_skupni$REB)
+osebni_podatki_skupni$AST <- parse_double(osebni_podatki_skupni$AST)
+
+
+povprecje_osebni_podatki <- osebni_podatki_skupni %>% 
+  group_by(PLAYER, COUNTRY) %>% 
+  summarise(PTS = mean(PTS), REB = mean(REB), AST = mean(AST))  ##združil po igralcih in državah ter naredil povprečje za tiste, ki so igrali v več sezonah
