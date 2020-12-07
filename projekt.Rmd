@@ -1,6 +1,6 @@
 ---
 title: "Poročilo pri predmetu Analiza podatkov s programom R"
-author: "Študent FMF"
+author: "Gašper Potočnik"
 output:
   html_document: default
   pdf_document:
@@ -22,11 +22,11 @@ source("lib/libraries.r", encoding="UTF-8")
 source("lib/rstudio.r", encoding="UTF-8")
 ```
 
-# Izbira teme
+## Analiza igralcev NBA
 
-Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
+Analiziral bom podatke o igralcih ligi NBA v zadnjih 20 letih (2000 - 2019). Predvsem se bom oredotočili na primerjavo med igralci iz Amerike in ostalimi.
 
-![](slike/grb.png)
+![](slike/nba.png)
 
 ***
 
@@ -36,24 +36,21 @@ Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
 source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
-Uvozili smo podatke o občinah v obliki CSV s statističnega urada ter v obliki HTML
-z Wikipedije. Podatke imamo v dveh razpredelnicah v obliki *tidy data*.
+Podatke sem prekopiral in shranil v xlsx. datoteke iz uradne spletne strani NBA ter jih nato uvozil. 
+Nato sem vse podatke iz različnih let združil v eno tabelo in od tam naprej nadaljeval z urejanjem in obdelavo.
 
-1. `druzine` - podatki o družinah za vsako občino
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `velikost.druzine` - spremenljivka: število otrok v družini (število: 1, 2, 3 ali 4, kjer zadnja vrednost pomeni 4 ali več),
-  - `stevilo.druzin` - meritev: število družin z ustreznim številom otrok v ustrezni občini (število).
-
-2. `obcine` - podatki o občinah
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `povrsina` - meritev: površina občine v km$^2$ (število),
-  - `prebivalci` - meritev: prebivalstvo občine (število),
-  - `gostota` - meritev: število prebivalcev na km$^2$ (število),
-  - `naselja` - meritev: število naselij v občini (število),
-  - `ustanovitev` - meritev: leto ustanovitve občine (število),
-  - `pokrajina` - meritev: pokrajina, ki ji občina pripada (neurejen faktor),
-  - `regija` - meritev: regija, ki ji občina pripada (neurejen faktor),
-  - `odcepitev` - meritev: podatki o občinah, od katerih se je občina odcepila (besedilo).
+1. Tabele
+  - `osebni_podatki_skupni` - podatki o vseh igralcih v vsem opazovanem obdobju
+  - `povprecje_osebni_podatki` - podatki za posamezne igralce (tisti, ki so igrali več let imajo predstavljene povprečne podatke)
+  - `povprecje_drzave` - podatki o povprečju, ki ga prispevajo vsi igralci iz iste države
+  - `stevilo_igralcev` - število igralcev iz vsake države 
+  - `amerika_svet` - primerjava števila igralcev, ki so iz Amerike in ostalimi
+  - `top10_drzav_igralci` - top 10 držav z največ igralci v NBA
+  - `top10_drzav_tocke` - top 10 držav z največjim povprečinim številom točk na igralca
+  
+2. Spremenljivke
+  - `vsi_igralci`, `igrlci_amerika`, `igralci_ostali`
+  - `stevilo` - vektor, ki pove število vseh igralcev, ameriških igralcev in ostalih igralcev
 
 **Opomba**: da bi razpredelnica `obcine` res bila v obliki *tidy data*, bi morali odstraniti stolpec `gostota` (saj je izpeljan iz stolpcev `povrsina` in `prebivalci`), podatke o pokrajinah pa bi morali premakniti v drugo razpredelnico, saj nekatere občine pripadajo dvema pokrajinama. Podobno bi morali narediti tudi s stolpcem `odcepitev`.
 

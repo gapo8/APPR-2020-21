@@ -50,7 +50,7 @@ povprecje_osebni_podatki <- osebni_podatki_skupni %>%
 povprecje_drzave <- osebni_podatki_skupni %>% group_by(COUNTRY) %>% summarise(PTS = mean(PTS), REB = mean(REB), AST = mean(AST))
 
 
-stevilo_igralcev <- povprecje_osebni_podatki %>% group_by(COUNTRY) %>% summarise(stevilo = n())
+stevilo_igralcev <- povprecje_osebni_podatki %>% group_by(COUNTRY) %>% summarise(stevilo = n()) ##število igralcev iz vsake džave
 
 povprecje_drzave$COUNTRY[povprecje_drzave$COUNTRY == 'USA'] <- 'United States'
 povprecje_drzave$COUNTRY[povprecje_drzave$COUNTRY == 'Russia'] <- 'Russian Federation'
