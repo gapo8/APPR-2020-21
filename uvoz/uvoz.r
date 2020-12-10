@@ -72,5 +72,4 @@ top10_drzav_igralci <- stevilo_igralcev_brez_amerike_in_NA %>% top_n(stevilo, n 
 top10_drzav_tocke <- povprecje_drzave %>% top_n(PTS, n =10)
 
 
-povprecje_osebni_podatki$COUNTRY <- as.factor(povprecje_osebni_podatki$COUNTRY) 
-svet <- left_join(x = World, y = povprecje_osebni_podatki, by = c('name' = 'COUNTRY'))
+
