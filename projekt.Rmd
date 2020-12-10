@@ -52,13 +52,12 @@ Nato sem vse podatke iz različnih let združil v eno tabelo in od tam naprej na
   - `vsi_igralci`, `igrlci_amerika`, `igralci_ostali`
   - `stevilo` - vektor, ki pove število vseh igralcev, ameriških igralcev in ostalih igralcev
 
-**Opomba**: da bi razpredelnica `obcine` res bila v obliki *tidy data*, bi morali odstraniti stolpec `gostota` (saj je izpeljan iz stolpcev `povrsina` in `prebivalci`), podatke o pokrajinah pa bi morali premakniti v drugo razpredelnico, saj nekatere občine pripadajo dvema pokrajinama. Podobno bi morali narediti tudi s stolpcem `odcepitev`.
 
 Spodnji graf prikazuje porazdelitev števila naselij v občinah.
 
-```{r histogram, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
-ggplot(obcine, aes(x=naselja)) + geom_histogram() +
-  ggtitle("Pogostost števila naselij") + xlab("Število naselij") + ylab("Število občin")
+```{r stolpicni_diagram, echo=FALSE, message=FALSE, fig.align='center', fig.cap=''}
+ggplot(top10_drzav_igralci) + aes(x=COUNTRY, y=stevilo) + geom_col(fill = 'red')+
+ggtitle("Top 10 držav z največ igralci v NBA") + theme(panel.background = element_rect(fill = 'grey'))
 ```
 
 ***
@@ -69,12 +68,11 @@ ggplot(obcine, aes(x=naselja)) + geom_histogram() +
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
 
-Spodnji zemljevid prikazuje povprečno velikost družine za vsako občino.
+Spodnji zemljevid prikazuje število igralcev iz posamezne države, ki igrajo ali so igrali v NBA v letih 2000-2020. Pri tem je vsak igralec štet enkrat, tudi če je igral več let.
 
-```{r zemljevid, fig.align='center', fig.cap='Zemljevid povprečnega števila otrok v družini'}
-tm_shape(merge(zemljevid, povprecja, by.x="OB_UIME", by.y="obcina")) +
-  tm_polygons("povprecje", title="Povprečje") +
-  tm_layout(title="Povprečno število otrok v družini")
+```{r zemljevid, fig.align='center', fig.cap='Zemljevid števila igralcev iz posamezne države'}
+tmap_mode('view')
+tm_shape(svet_stevilo_igralcev) + tm_polygons("stevilo", breaks = c(0, 1, 5, 10, 15, 20, 30, 40, Inf))
 ```
 
 ***
