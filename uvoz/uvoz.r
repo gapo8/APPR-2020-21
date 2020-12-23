@@ -48,7 +48,13 @@ povprecje_osebni_podatki <- osebni_podatki_skupni %>%
 
 
 povprecje_osebni_podatki$COUNTRY[povprecje_osebni_podatki$COUNTRY == 'USA'] <- 'United States'
-
+povprecje_osebni_podatki$COUNTRY[povprecje_osebni_podatki$COUNTRY == 'Czech Republi...'] <- 'Czech Rep.'
+povprecje_osebni_podatki$COUNTRY[povprecje_osebni_podatki$COUNTRY == 'Dominican Rep...'] <- 'Dominican Rep.'
+povprecje_osebni_podatki$COUNTRY[povprecje_osebni_podatki$COUNTRY == 'Serbia and Mo...'] <- 'Serbia'
+povprecje_osebni_podatki$COUNTRY[povprecje_osebni_podatki$COUNTRY == 'Bosnia and He...'] <- 'Bosnia and Herz.'
+povprecje_osebni_podatki$COUNTRY[povprecje_osebni_podatki$COUNTRY == 'Democratic Re...'] <- 'Dem. Rep. Congo'
+povprecje_osebni_podatki$COUNTRY[povprecje_osebni_podatki$COUNTRY == 'DRC'] <- 'Dem. Rep. Congo'
+povprecje_osebni_podatki$COUNTRY[povprecje_osebni_podatki$COUNTRY == 'United Kingdo...'] <- 'United Kingdom'
 
 
 povprecje_drzave <- osebni_podatki_skupni %>% group_by(COUNTRY) %>% summarise(PTS = mean(PTS), REB = mean(REB), AST = mean(AST))
