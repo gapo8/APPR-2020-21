@@ -47,13 +47,16 @@ povprecje_osebni_podatki <- osebni_podatki_skupni %>%
   summarise(PTS = mean(PTS), REB = mean(REB), AST = mean(AST))  ##združil po igralcih in državah ter naredil povprečje za tiste, ki so igrali v več sezonah
 
 
+povprecje_osebni_podatki$COUNTRY[povprecje_osebni_podatki$COUNTRY == 'USA'] <- 'United States'
+
+
+
 povprecje_drzave <- osebni_podatki_skupni %>% group_by(COUNTRY) %>% summarise(PTS = mean(PTS), REB = mean(REB), AST = mean(AST))
 
 
 stevilo_igralcev <- povprecje_osebni_podatki %>% group_by(COUNTRY) %>% summarise(stevilo = n()) ##število igralcev iz vsake džave
 
-povprecje_drzave$COUNTRY[povprecje_drzave$COUNTRY == 'USA'] <- 'United States'
-stevilo_igralcev$COUNTRY[stevilo_igralcev$COUNTRY == 'USA'] <- 'United States'
+
 stevilo_igralcev$COUNTRY[stevilo_igralcev$COUNTRY == 'South Korea'] <- 'Republic of Korea'
 
 vsi_igralci <- sum(stevilo_igralcev$stevilo)
