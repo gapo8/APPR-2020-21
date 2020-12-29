@@ -24,8 +24,13 @@ ypc$PLAYER <- NULL
 ypc$COUNTRY <- NULL
 row.names(ypc) <- yp$PLAYER
 
+#poiščimo število skupin
+fviz_nbclust(ypc, FUN = hcut, method = "wss")
+fviz_nbclust(ypc, FUN = hcut, method = "silhouette")
+fviz_nbclust(ypc, FUN = hcut, method = "gap_stat", nstart=25, nboot=300)
 
-n <- 5
+
+n <- 3
 skupine <- hclust(dist(scale(ypc))) %>% cutree(n)
 
 b <- data.frame(lipa=names(skupine), skupina=factor(skupine))
@@ -34,8 +39,8 @@ c <- inner_join(yp, data.frame(PLAYER=names(skupine),
 
 ggplot(inner_join(yp, data.frame(PLAYER=names(skupine),
                                      skupina=factor(skupine)), by="PLAYER")
-       , aes(x=PTS, y=AST, color=skupina, shape=COUNTRY)) + geom_point() +
-  ggtitle("Število naselij glede na površino občine") +
-  xlab(expression("Površina (km"^2 * ")")) + ylab("Št. naselij") +
+       , aes(x=PTS, y=AST, color=skupina, shape=COUNTRY))  + geom_point()  +
+  ggtitle("Število asistenc glede na število točk") +
+  xlab("Povprečno število točk") + ylab("Povprečno število asistenc") +
   guides(color=guide_legend(title="Skupina"),
-         size=guide_legend(title="Prebivalci (* 1000)"))
+         shape=guide_legend(title="Država")) 
