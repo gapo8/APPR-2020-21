@@ -61,22 +61,28 @@ povprecje_drzave <- osebni_podatki_skupni %>% group_by(COUNTRY) %>% summarise(PT
 
 
 stevilo_igralcev <- povprecje_osebni_podatki %>% group_by(COUNTRY) %>% summarise(stevilo = n()) ##število igralcev iz vsake džave
+stevilo_igralcev <- stevilo_igralcev[!is.na(stevilo_igralcev$COUNTRY),]  #odstranimo vrstice z NA
+rr <- stevilo_igralcev
+stevilo_igralcev$COUNTRY <- NULL
+row.names(stevilo_igralcev) <- rr$COUNTRY
 
-
-stevilo_igralcev$COUNTRY[stevilo_igralcev$COUNTRY == 'South Korea'] <- 'Republic of Korea'
 
 vsi_igralci <- sum(stevilo_igralcev$stevilo)
-igralci_amerika <- unlist(stevilo_igralcev[69, 2])
+igralci_amerika <- unlist(stevilo_igralcev["United States", ])
 igralci_ostali <- vsi_igralci - igralci_amerika
 
-stevilo <- c(vsi_igralci, igralci_amerika, igralci_ostali)
-ime <- c('vsi igralci', 'igralci amerika', 'igralci ostali')
-vsi_amerika_svet <- data.frame(stevilo, row.names = ime)
-amerika_svet <- data.frame(stevilo[-1], row.names = ime[-1])
+
+#tortni diagram
+slices <- c(igralci_amerika, igralci_ostali)
+lbls <- c('ZDA', 'Ostali')
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels
+lbls <- paste(lbls,"%",sep="") # ad % to labels
 
 
-stevilo_igralcev_brez_amerike_in_NA <- stevilo_igralcev[-c(69, 73),]
-top10_drzav_igralci <- stevilo_igralcev_brez_amerike_in_NA %>% top_n(stevilo, n = 10)
+
+stevilo_igralcev_brez_amerike <- subset(rr, stevilo <= 1000)
+top10_drzav_igralci <- stevilo_igralcev_brez_amerike %>% top_n(stevilo, n = 10)
 
 top10_drzav_tocke <- povprecje_drzave %>% top_n(PTS, n =10)
 

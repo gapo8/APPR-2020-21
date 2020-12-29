@@ -38,13 +38,7 @@ c <- inner_join(yp, data.frame(PLAYER=names(skupine),
                                skupina=factor(skupine)), by="PLAYER")
 row.names(c) <- c$PLAYER
 
-ggplot(inner_join(yp, data.frame(PLAYER=names(skupine),
-                                     skupina=factor(skupine)), by="PLAYER")
-       , aes(x=PTS, y=AST, color=skupina, shape=COUNTRY))  + geom_point()  + geom_point(data = c[c('Luka Doncic','Goran Dragic'),], size=5) +
-  ggtitle("Število asistenc glede na število točk") +
-  xlab("Povprečno število točk") + ylab("Povprečno število asistenc") + 
-  guides(color=guide_legend(title="Skupina"),
-         shape=guide_legend(title="Država")) 
+
 
 
 
@@ -67,8 +61,4 @@ grupe <- hclust(dist(scale(p))) %>% cutree(k)
 pp <- inner_join(povprecje_drzave, data.frame(COUNTRY=names(grupe),grupa=factor(grupe)), by='COUNTRY')
 row.names(pp) <- pp$COUNTRY
 
-ggplot(pp, aes(x=PTS, y=AST, color=REB, shape=grupa))  + geom_point(size= 3)  + geom_point(data = pp['Slovenia',], size=7) +
-  ggtitle("Število asistenc glede na število točk") +
-  xlab("Povprečno število točk") + ylab("Povprečno število asistenc") + 
-  guides(color=guide_legend(title="Povprečno število skokov"),
-         shape=guide_legend(title="Grupa")) 
+

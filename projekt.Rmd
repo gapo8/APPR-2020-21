@@ -53,11 +53,18 @@ Nato sem vse podatke iz različnih let združil v eno tabelo in od tam naprej na
   - `stevilo` - vektor, ki pove število vseh igralcev, ameriških igralcev in ostalih igralcev
 
 
-Spodnji graf prikazuje porazdelitev števila naselij v občinah.
+```{r tortni diagram, echo=FALSE, message=FALSE, fig.align='center', fig.cap=''}
+pie3D(slices, labels = lbls, explode=0.1, main="Razmerje števila igralcev med ZDA in ostalimi")
+```
+
+
+
+Spodnji graf prikazuje 10 držav z največ igralci v ligi NBA poleg ZDA.
 
 ```{r stolpicni_diagram, echo=FALSE, message=FALSE, fig.align='center', fig.cap=''}
-ggplot(top10_drzav_igralci) + aes(x=COUNTRY, y=stevilo) + geom_col(fill = 'red')+
-ggtitle("Top 10 držav z največ igralci v NBA") + theme(panel.background = element_rect(fill = 'grey'))
+ggplot(top10_drzav_igralci, aes(x=COUNTRY, y=stevilo)) + geom_col(fill = 'red') + xlab("Džave") + ylab("Število igralcev") +
+ggtitle("10 držav z največ igralci v NBA") + theme(panel.background = element_rect(fill = 'black')) 
+
 ```
 
 ***
@@ -80,23 +87,30 @@ tm_shape(svet_stevilo_igralcev) + tm_polygons("stevilo", breaks = c(0, 1, 5, 10,
 # Napredna analiza podatkov
 
 ```{r analiza}
-source("analiza/analiza.r", encoding="UTF-8")
+source("analiza/analiza2.r", encoding="UTF-8")
 ```
 
-Spodnji graf prikazuje povezavo med številom naselij in površino občine.
+Spodnji graf prikazuje povezavo med številom točk in asistenc za igralce v ligi NBA v sezoni 2019/2020. Prav tako loči med igralci iz ZDA in ostalimi. Velika krogca predstavljata slovenska košarkarja.
 
-```{r graf, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
-ggplot(inner_join(obcine, data.frame(obcina=names(skupine),
-                                     skupina=factor(skupine)), by="obcina")
-, aes(x=povrsina, y=naselja, color=skupina, size=prebivalci/1000)) + geom_point() +
-  ggtitle("Število naselij glede na površino občine") +
-  xlab(expression("Površina (km"^2 * ")")) + ylab("Št. naselij") +
+```{r graf, fig.align='center', fig.cap='Povezava med številom točk in asistenc'}
+ggplot(inner_join(yp, data.frame(PLAYER=names(skupine),
+                                     skupina=factor(skupine)), by="PLAYER")
+       , aes(x=PTS, y=AST, color=skupina, shape=COUNTRY))  + geom_point()  + geom_point(data = c[c('Luka Doncic','Goran Dragic'),], size=5) +
+  ggtitle("Število asistenc glede na število točk") +
+  xlab("Povprečno število točk") + ylab("Povprečno število asistenc") + 
   guides(color=guide_legend(title="Skupina"),
-         size=guide_legend(title="Prebivalci (* 1000)"))
+         shape=guide_legend(title="Država")) 
 ```
 
-***
 
-```{r shiny}
-shinyAppDir("shiny", options=list(width="100%", height=600))
+Spodnji graf prikazuje povezavo med številom točk, asistenc in skokov, glede na povprečja posamezne države. Velik krogec prikazuje Slovenijo.
+
+```{r graf, fig.align='center', fig.cap='Povezava med številom točk, asistenc in skokov glede na državo'}
+ggplot(pp, aes(x=PTS, y=AST, color=REB, shape=grupa)) + 
+  geom_point(size= 3)  + geom_point(data = pp['Slovenia',], size=7) +
+  ggtitle("Število asistenc glede na število točk") +
+  xlab("Povprečno število točk") + ylab("Povprečno število asistenc") + 
+  guides(color=guide_legend(title="Povprečno število skokov"),
+         shape=guide_legend(title="Grupa")) 
 ```
+
