@@ -27,7 +27,7 @@ row.names(ypc) <- yp$PLAYER
 #poiščimo število skupin
 fviz_nbclust(ypc, FUN = hcut, method = "wss")
 fviz_nbclust(ypc, FUN = hcut, method = "silhouette")
-fviz_nbclust(ypc, FUN = hcut, method = "gap_stat", nstart=25, nboot=300)
+
 
 
 n <- 3
@@ -54,7 +54,7 @@ row.names(p) <- povprecje_drzave$COUNTRY
 
 fviz_nbclust(p, FUN = hcut, method = "wss")
 fviz_nbclust(p, FUN = hcut, method = "silhouette")
-fviz_nbclust(p, FUN = hcut, method = "gap_stat", nstart=25, nboot=300)
+
 
 k <- 3
 grupe <- hclust(dist(scale(p))) %>% cutree(k)

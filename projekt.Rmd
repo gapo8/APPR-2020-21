@@ -113,4 +113,4 @@ ggplot(pp, aes(x=PTS, y=AST, color=REB, shape=grupa)) +
   guides(color=guide_legend(title="Povprečno število skokov"),
          shape=guide_legend(title="Grupa")) 
 ```
-
+***
