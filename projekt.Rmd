@@ -61,7 +61,7 @@ pie3D(slices, labels = lbls, explode=0.1, main="Razmerje števila igralcev med Z
 
 Spodnji graf prikazuje 10 držav z največ igralci v ligi NBA poleg ZDA.
 
-```{r stolpicni_diagram, echo=FALSE, message=FALSE, fig.align='center', fig.cap=''}
+```{r stolpicni_diagram, echo=FALSE, fig.align='center', fig.cap='', message=FALSE}
 ggplot(top10_drzav_igralci, aes(x=COUNTRY, y=stevilo)) + geom_col(fill = 'red') + xlab("Džave") + ylab("Število igralcev") +
 ggtitle("10 držav z največ igralci v NBA") + theme(panel.background = element_rect(fill = 'black')) 
 
@@ -79,6 +79,7 @@ Spodnji zemljevid prikazuje število igralcev iz posamezne države, ki igrajo al
 
 ```{r zemljevid, fig.align='center', fig.cap='Zemljevid števila igralcev iz posamezne države'}
 tm_shape(svet_stevilo_igralcev) + tm_polygons("stevilo", breaks = c(0, 1, 5, 10, 15, 20, 30, 40, Inf))
+
 ```
 
 ***
@@ -91,20 +92,20 @@ source("analiza/analiza2.r", encoding="UTF-8")
 
 Spodnji graf prikazuje povezavo med številom točk in asistenc za igralce v ligi NBA v sezoni 2019/2020. Prav tako loči med igralci iz ZDA in ostalimi. Velika krogca predstavljata slovenska košarkarja.
 
-```{r graf, fig.align='center', fig.cap='Povezava med številom točk in asistenc'}
-ggplot(inner_join(yp, data.frame(PLAYER=names(skupine),
-                                     skupina=factor(skupine)), by="PLAYER")
+```{r graf2, fig.align='center', fig.cap='Povezava med številom točk in asistenc'}
+ggplot(inner_join(yp, data.frame(PLAYER=names(skupine),skupina=factor(skupine)), by="PLAYER")
        , aes(x=PTS, y=AST, color=skupina, shape=COUNTRY))  + geom_point()  + geom_point(data = c[c('Luka Doncic','Goran Dragic'),], size=5) +
   ggtitle("Število asistenc glede na število točk") +
   xlab("Povprečno število točk") + ylab("Povprečno število asistenc") + 
   guides(color=guide_legend(title="Skupina"),
          shape=guide_legend(title="Država")) 
+
 ```
 
 
 Spodnji graf prikazuje povezavo med številom točk, asistenc in skokov, glede na povprečja posamezne države. Velik krogec prikazuje Slovenijo.
 
-```{r graf, fig.align='center', fig.cap='Povezava med številom točk, asistenc in skokov glede na državo'}
+```{r graf3, fig.align='center', fig.cap='Povezava med številom točk, asistenc in skokov glede na državo'}
 ggplot(pp, aes(x=PTS, y=AST, color=REB, shape=grupa)) + 
   geom_point(size= 3)  + geom_point(data = pp['Slovenia',], size=7) +
   ggtitle("Število asistenc glede na število točk") +
