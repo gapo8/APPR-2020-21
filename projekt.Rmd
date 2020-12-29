@@ -78,7 +78,6 @@ source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 Spodnji zemljevid prikazuje število igralcev iz posamezne države, ki igrajo ali so igrali v NBA v letih 2000-2020. Pri tem je vsak igralec štet enkrat, tudi če je igral več let.
 
 ```{r zemljevid, fig.align='center', fig.cap='Zemljevid števila igralcev iz posamezne države'}
-tmap_mode('view')
 tm_shape(svet_stevilo_igralcev) + tm_polygons("stevilo", breaks = c(0, 1, 5, 10, 15, 20, 30, 40, Inf))
 ```
 
