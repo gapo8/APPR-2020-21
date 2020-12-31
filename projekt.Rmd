@@ -87,7 +87,7 @@ tm_shape(svet_stevilo_igralcev) + tm_polygons("stevilo", breaks = c(0, 1, 5, 10,
 # Napredna analiza podatkov
 
 ```{r analiza}
-source("analiza/analiza2.r", encoding="UTF-8")
+source("analiza/analiza2.R", encoding="UTF-8")
 ```
 
 Spodnji graf prikazuje povezavo med številom točk in asistenc za igralce v ligi NBA v sezoni 2019/2020. Prav tako loči med igralci iz ZDA in ostalimi. Velika krogca predstavljata slovenska košarkarja.
