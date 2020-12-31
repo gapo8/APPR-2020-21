@@ -78,7 +78,7 @@ lbls <- c('ZDA', 'Ostali')
 pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-
+#torta <- pie3D(slices, labels = lbls, explode=0.1, main="Razmerje števila igralcev med ZDA in ostalimi")
 
 
 stevilo_igralcev_brez_amerike <- subset(rr, stevilo <= 1000)
