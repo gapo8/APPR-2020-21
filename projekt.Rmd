@@ -59,9 +59,8 @@ Nato sem vse podatke iz različnih let združil v eno tabelo in od tam naprej na
 ***
 Tortni diagram prikazuje razmerje med številom košarkarjev iz ZDA in tistimi iz drugih držav.
 
-```{r tortni diagram, echo=FALSE, message=FALSE, fig.align='center', fig.cap=''}
-pie3D(slices, labels = lbls, explode=0.1, main="Razmerje števila igralcev med ZDA in ostalimi")
-```
+![](slike/torta.png)
+
 
 
 
