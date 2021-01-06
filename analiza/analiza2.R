@@ -25,8 +25,8 @@ ypc$COUNTRY <- NULL
 row.names(ypc) <- yp$PLAYER
 
 #poiščimo število skupin
-fviz_nbclust(ypc, FUN = hcut, method = "wss")
-fviz_nbclust(ypc, FUN = hcut, method = "silhouette")
+#fviz_nbclust(ypc, FUN = hcut, method = "wss")
+#fviz_nbclust(ypc, FUN = hcut, method = "silhouette")
 
 
 
@@ -52,8 +52,8 @@ p$COUNTRY <- NULL
 row.names(p) <- povprecje_drzave$COUNTRY
 
 
-fviz_nbclust(p, FUN = hcut, method = "wss")
-fviz_nbclust(p, FUN = hcut, method = "silhouette")
+#fviz_nbclust(p, FUN = hcut, method = "wss")
+#fviz_nbclust(p, FUN = hcut, method = "silhouette")
 
 
 k <- 3

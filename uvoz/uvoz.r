@@ -86,5 +86,11 @@ top10_drzav_igralci <- stevilo_igralcev_brez_amerike %>% top_n(stevilo, n = 10)
 
 top10_drzav_tocke <- povprecje_drzave %>% top_n(PTS, n =10)
 
-
+stevilo_igralcev_na_leto <- data.frame('Leto' = c(2000:2019), 'stevilo' = c(nrow(osebni_podatki2000_2001),nrow(osebni_podatki2001_2002),nrow(osebni_podatki2002_2003),
+                                                               nrow(osebni_podatki2003_2004),nrow(osebni_podatki2004_2005),nrow(osebni_podatki2005_2006),
+                                                               nrow(osebni_podatki2006_2007),nrow(osebni_podatki2007_2008),nrow(osebni_podatki2008_2009),
+                                                               nrow(osebni_podatki2009_2010),nrow(osebni_podatki2010_2011),nrow(osebni_podatki2011_2012),
+                                                               nrow(osebni_podatki2012_2013),nrow(osebni_podatki2013_2014),nrow(osebni_podatki2014_2015),
+                                                               nrow(osebni_podatki2015_2016),nrow(osebni_podatki2016_2017),nrow(osebni_podatki2017_2018),
+                                                               nrow(osebni_podatki2018_2019),nrow(osebni_podatki2019_2020)))
 

@@ -47,10 +47,11 @@ Nato sem vse podatke iz različnih let združil v eno tabelo in od tam naprej na
   - `amerika_svet` - primerjava števila igralcev, ki so iz Amerike in ostalimi
   - `top10_drzav_igralci` - top 10 držav z največ igralci v NBA
   - `top10_drzav_tocke` - top 10 držav z največjim povprečinim številom točk na igralca
+  - `stevilo_igralcev_na_leto` - število vseh igralcev v posameznem letu
   
 2. Spremenljivke
-  - `vsi_igralci`, `igrlci_amerika`, `igralci_ostali`
-  - `stevilo` - vektor, ki pove število vseh igralcev, ameriških igralcev in ostalih igralcev
+  - `vsi_igralci`, `igrlci_amerika`, `igralci_ostali` - za stolpični diagram
+  - `grupe`, `skupine` - za napredno analizo podatkov
 
 
 
@@ -62,9 +63,15 @@ Tortni diagram prikazuje razmerje med številom košarkarjev iz ZDA in tistimi i
 ![](slike/torta.png)
 
 
+# Analiza in vizualizacija podatkov
+
+```{r vizualizacija, results='hide'}
+source("vizualizacija/vizualizacija.r", encoding="UTF-8")
+```
+***
 
 
-Spodnji graf prikazuje 10 držav z največ igralci v ligi NBA poleg ZDA.
+Spodnja grafa prikazujeta 10 držav z največ igralci v ligi NBA poleg ZDA ter spreminjanje števila vseh igralcev skozi leta 2000-2019.
 
 ```{r stolpicni_diagram, echo=FALSE, fig.align='center', fig.cap='', message=FALSE}
 ggplot(top10_drzav_igralci, aes(x=COUNTRY, y=stevilo)) + geom_col(fill = 'red') + xlab("Džave") + ylab("Število igralcev") +
@@ -72,13 +79,15 @@ ggtitle("10 držav z največ igralci v NBA") + theme(panel.background = element_
 
 ```
 
-***
 
-# Analiza in vizualizacija podatkov
+```{r crtni_diagram, echo=FALSE, fig.align='center', fig.cap='', message=FALSE}
+ggplot(stevilo_igralcev_na_leto, aes(x=Leto, y=stevilo)) + geom_line(fill = 'red') + geom_point() + xlab("Leto") + ylab("Število igralcev") +
+ggtitle("Število vseh igralcev v letu")  
 
-```{r vizualizacija, results='hide'}
-source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
+
+
+***
 
 Spodnji zemljevid prikazuje število igralcev iz posamezne države, ki igrajo ali so igrali v NBA v letih 2000-2020. Pri tem je vsak igralec štet enkrat, tudi če je igral več let.
 
@@ -97,7 +106,7 @@ source("analiza/analiza2.R", encoding="UTF-8")
 
 Spodnji graf prikazuje povezavo med številom točk in asistenc za igralce v ligi NBA v sezoni 2019/2020. Prav tako loči med igralci iz ZDA in ostalimi. Velika krogca predstavljata slovenska košarkarja.
 
-```{r graf2, fig.align='center', fig.cap='Povezava med številom točk in asistenc'}
+```{r graf2, fig.align='center', fig.cap=''}
 ggplot(inner_join(yp, data.frame(PLAYER=names(skupine),skupina=factor(skupine)), by="PLAYER")
        , aes(x=PTS, y=AST, color=skupina, shape=COUNTRY))  + geom_point()  + geom_point(data = c[c('Luka Doncic','Goran Dragic'),], size=5) +
   ggtitle("Število asistenc glede na število točk") +
@@ -107,6 +116,7 @@ ggplot(inner_join(yp, data.frame(PLAYER=names(skupine),skupina=factor(skupine)),
 
 ```
 
+***
 
 Spodnji graf prikazuje povezavo med številom točk, asistenc in skokov, glede na povprečja posamezne države. Velik krogec prikazuje Slovenijo.
 
